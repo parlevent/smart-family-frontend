@@ -108,7 +108,8 @@
 
             logout: function () {
                 let xhr = new XMLHttpRequest();
-                xhr.open("GET", "/auth/logout", true);
+                xhr.open("GET", "http://192.168.0.106:8080/auth/logout", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {

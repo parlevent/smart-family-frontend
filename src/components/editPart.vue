@@ -5,17 +5,13 @@
                 <div class="edit-title">
                     <div>
                         <Row>
-                            <i-col span="2">标题</i-col>
-                            <i-col span="22">
+                            <i-col span="3">设备名</i-col>
+                            <i-col span="21">
                                 <i-input v-model="edit_data.title" width="20"></i-input>
 
                             </i-col>
                         </Row>
                     </div>
-                </div>
-
-                <div class="rich-edit">
-                    <editor :html-data="edit_data.qText" v-on:textChange="changeHtml"/>
                 </div>
 
                 <!--<textarea>{{ rich_text }}</textarea>-->
@@ -24,8 +20,8 @@
 
                     <Form class="form-body" ref="formValidate" :model="formValidate" :rules="ruleValidate"
                           :label-width="80">
-                        <FormItem label="答案" prop="answer">
-                            <i-input v-model="formValidate.answer" placeholder="请输入参考答案"></i-input>
+                        <FormItem label="描述" prop="answer">
+                            <i-input v-model="answer" placeholder="请输入描述"></i-input>
                         </FormItem>
                         <FormItem label="标签" prop="tags">
                             <Tag v-for="item in edit_data.qTag" :key="item" :name="item" closable
@@ -34,7 +30,7 @@
                             <Button icon="ios-plus-empty" type="dashed" size="small" @click="handleAdd">添加标签
                             </Button>
                         </FormItem>
-                        <FormItem label="错题原因" prop="desc">
+                        <FormItem label="备注" prop="desc">
                             <i-input v-model="edit_data.reason" type="textarea"
                                      :autosize="{minRows: 2,maxRows: 5}"
                                      placeholder="填写备注"></i-input>
@@ -107,16 +103,13 @@
 
                 set_tag: false,
                 edit_tag: "",
+                answer: '',
 
                 formValidate: {
-                    answer: '',
                     desc: ''
                 },
 
                 ruleValidate: {
-                    answer: [
-                        {required: true, message: '答案不能为空', trigger: 'blur'}
-                    ],
                 },
 
                 rich_text: '<p>在这里输入题目</p>',
@@ -142,7 +135,8 @@
 
             this.item_id = this.$route.query.id;
             let xhr = new XMLHttpRequest();
-            xhr.open("GET", "/item/entry?id=" + this.item_id, true);
+            xhr.open("GET", "http://192.168.0.106:8080/item/entry?id=" + this.item_id, true);
+            xhr.withCredentials = true;
             xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
             xhr.onreadystatechange = () => {
@@ -171,7 +165,8 @@
 
             fetchAllTags: function () {
                 let xhr = new XMLHttpRequest();
-                xhr.open("GET", "/item/tags", true);
+                xhr.open("GET", "http://192.168.0.106:8080/item/tags", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {
@@ -244,7 +239,8 @@
                 console.log(data);
 
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", "/item/entry", true);
+                xhr.open("POST", "http://192.168.0.106:8080/item/entry", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {
@@ -280,7 +276,8 @@
                 console.log(data);
 
                 let xhr = new XMLHttpRequest();
-                xhr.open("PUT", "/item/entry", true);
+                xhr.open("PUT", "http://192.168.0.106:8080/item/entry", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {
@@ -303,7 +300,8 @@
             },
 
             cancelSubmit: function () {
-                this.$router.push('item');
+                // this.$router.push('item');
+                this.$router.go(-1);
             },
 
             addTag: function () {

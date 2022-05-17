@@ -27,7 +27,7 @@
                             </Form>
 
                             <Button type="text" @click="switch_to_manage">切换至管理员登录</Button>
-                            <Button type="text" @click="btn_register">快速注册</Button>
+<!--                            <Button type="text" @click="btn_register">快速注册</Button>-->
                         </div>
                     </Card>
                 </div>

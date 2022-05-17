@@ -13,8 +13,8 @@
                         <div class="edit-title">
                             <div>
                                 <Row>
-                                    <i-col span="2">标题</i-col>
-                                    <i-col span="22">
+                                    <i-col span="3">设备名</i-col>
+                                    <i-col span="21">
                                         <i-input v-model="edit_data.title" width="20"></i-input>
 
                                     </i-col>
@@ -22,9 +22,9 @@
                             </div>
                         </div>
 
-                        <div class="rich-edit">
-                            <editor :html-data="edit_data.qText" v-on:textChange="changeHtml"/>
-                        </div>
+<!--                        <div class="rich-edit">-->
+<!--                            <editor :html-data="edit_data.qText" v-on:textChange="changeHtml"/>-->
+<!--                        </div>-->
 
                         <!--<textarea>{{ rich_text }}</textarea>-->
 
@@ -32,8 +32,8 @@
 
                             <Form class="form-body" ref="formValidate" :model="formValidate" :rules="ruleValidate"
                                   :label-width="80">
-                                <FormItem label="答案" prop="answer">
-                                    <i-input v-model="formValidate.answer" placeholder="请输入参考答案"></i-input>
+                                <FormItem label="描述" prop="answer">
+                                    <i-input v-model="answer" placeholder="请输入描述"></i-input>
                                 </FormItem>
                                 <FormItem label="标签" prop="tags">
                                     <Tag v-for="item in edit_data.qTag" :key="item" :name="item" closable
@@ -42,7 +42,7 @@
                                     <Button icon="ios-plus-empty" type="dashed" size="small" @click="handleAdd">添加标签
                                     </Button>
                                 </FormItem>
-                                <FormItem label="错题原因" prop="desc">
+                                <FormItem label="备注" prop="desc">
                                     <i-input v-model="edit_data.reason" type="textarea"
                                              :autosize="{minRows: 2,maxRows: 5}"
                                              placeholder="填写备注"></i-input>
@@ -129,16 +129,13 @@
 
                 set_tag: false,
                 edit_tag: "",
+                answer: '',
 
                 formValidate: {
-                    answer: '',
                     desc: ''
                 },
 
                 ruleValidate: {
-                    answer: [
-                        {required: true, message: '答案不能为空', trigger: 'blur'}
-                    ],
                 },
 
                 rich_text: '<p>在这里输入题目</p>',
@@ -178,7 +175,7 @@
                     if (detailResponse.status) {
                         this.edit_data = detailResponse;
                         this.rich_text = this.edit_data.qText;
-                        this.formValidate.answer = detailResponse.cAnswer;
+                        this.answer = detailResponse.cAnswer;
                     }
                 }
             };
@@ -300,10 +297,10 @@
                 let edit_form = {
                     id: this.item_id,
                     title: this.edit_data.title,
-                    qText: this.rich_text,
+                    qText: "",
                     createTime: (new Date()).getTime(),
                     reason: this.edit_data.reason,
-                    cAnswer: this.formValidate.answer,
+                    cAnswer: this.answer,
                     qTag: this.edit_data.qTag
                 };
                 console.log(edit_form);
@@ -349,10 +346,10 @@
             addItem: function () {
                 let edit_form = {
                     title: this.edit_data.title,
-                    qText: this.rich_text,
+                    qText: "",
                     createTime: (new Date()).getTime(),
                     reason: this.edit_data.reason,
-                    cAnswer: this.formValidate.answer,
+                    cAnswer: this.answer,
                     qTag: this.edit_data.qTag
                 };
                 let data = JSON.stringify(edit_form);
@@ -375,7 +372,7 @@
                         if (addItemResponse.status) {
                             this.$Message.success('添加成功!');
                             console.log(addItemResponse.id);
-                            this.$router.push({name: 'Item', query: {id: addItemResponse.id}});
+                            this.$router.push({name: 'Notepad'});
                         } else {
                             this.$Message.warning('添加失败，请重试');
                         }

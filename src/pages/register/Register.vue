@@ -93,7 +93,7 @@
             };
             const validatePhone = (rule, value, callback) => {
                 if (value === '') {
-                    callback(new Error('手机号码不能为空'));
+                    callback();
                 } else if (!/^\d{11}$/.test(value)) {
                     callback(new Error('手机号码应为11位，且仅包含数字'));
                 } else {
@@ -117,11 +117,9 @@
                         {required: true, message: '用户名不能为空', trigger: 'blur'}
                     ],
                     mail: [
-                        {required: true, message: '邮箱不能为空', trigger: 'blur'},
                         {type: 'email', message: '邮箱格式不正确', trigger: 'blur'}
                     ],
                     phone: [
-                        {required: true, message: '手机号码不能为空', trigger: 'blur'},
                         {validator: validatePhone, trigger: 'blur'}
                     ],
                     password: [
@@ -167,7 +165,7 @@
                                 console.log(registerResponse.status);
                                 if (registerResponse.status) {
                                     this.$Message.success('注册成功!');
-                                    this.$router.push("notepad");
+                                    this.$router.go(-1);
                                 } else {
                                     this.$Message.warning('注册失败,可能是用户名被占用，请重新注册');
                                 }

@@ -83,12 +83,6 @@
                         }
                     },
                     {
-                        title: '错题数目',
-                        key: 'num',
-                        align: 'center',
-                        sortable: true
-                    },
-                    {
                         title: '邮箱',
                         key: 'email',
                         sortable: true
@@ -105,21 +99,6 @@
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'info',
-                                        size: 'default'
-                                    },
-                                    style: {
-                                        marginRight: '10px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.manage_items(params.index)
-                                        }
-                                    }
-                                }, '管理用户错题'),
-
                                 h('Button', {
                                     props: {
                                         type: 'warning',

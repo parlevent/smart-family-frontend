@@ -13,31 +13,31 @@
                         <div class="manage_part">
                             <div class="button_wrapper">
                                 <router-link to="edit">
-                                    <Button type="success" size="large" long icon="android-add">添加错题</Button>
+                                    <Button type="success" size="large" long icon="android-add">添加设备</Button>
                                 </router-link>
                             </div>
 
-                            <div class="button_wrapper">
-                                <Button type="primary" size="large" long icon="android-settings">管理错题本</Button>
-                            </div>
+<!--                            <div class="button_wrapper">-->
+<!--                                <Button type="primary" size="large" long icon="android-settings">管理错题本</Button>-->
+<!--                            </div>-->
 
                             <div class="card_wrapper">
                                 <card>
                                     <div>
                                         <div class="card_title">
-                                            统计数据
+                                            系统信息
                                         </div>
 
                                         <div class="card_content">
                                             <Row>
                                                 <i-col span="15">
                                                     <Row type="flex" justify="end">
-                                                        错题总计：
+                                                        设备总计：
                                                     </Row>
                                                 </i-col>
                                                 <i-col span="9">
                                                     <Row type="flex" justify="start">
-                                                        0
+                                                        {{q_data.length}}
                                                     </Row>
                                                 </i-col>
                                             </Row>
@@ -45,12 +45,12 @@
                                             <Row>
                                                 <i-col span="15">
                                                     <Row type="flex" justify="end">
-                                                        连续登录：
+                                                        打开的设备数：
                                                     </Row>
                                                 </i-col>
                                                 <i-col span="9">
                                                     <Row type="flex" justify="start">
-                                                        0
+                                                        {{opened_device}}
                                                     </Row>
                                                 </i-col>
                                             </Row>
@@ -58,12 +58,25 @@
                                             <Row>
                                                 <i-col span="15">
                                                     <Row type="flex" justify="end">
-                                                        错题复习率：
+                                                        关闭的设备数：
                                                     </Row>
                                                 </i-col>
                                                 <i-col span="9">
                                                     <Row type="flex" justify="start">
-                                                        0%
+                                                        {{q_data.length - opened_device}}
+                                                    </Row>
+                                                </i-col>
+                                            </Row>
+
+                                            <Row>
+                                                <i-col span="15">
+                                                    <Row type="flex" justify="end">
+                                                        异常的设备数：
+                                                    </Row>
+                                                </i-col>
+                                                <i-col span="9">
+                                                    <Row type="flex" justify="start">
+                                                        0
                                                     </Row>
                                                 </i-col>
                                             </Row>
@@ -83,25 +96,25 @@
                                         </div>
 
                                         <div class="card_content">
-                                            <Tag color="blue">未复习的错题</Tag>
-                                            <Tag>标签1</Tag>
-                                            <Tag>标签2</Tag>
-                                            <Tag>标签3</Tag>
-                                            <Tag>标签4</Tag>
-                                            <Tag>标签5</Tag>
-                                            <Tag>标签6</Tag>
-                                            <Tag>标签7</Tag>
+                                            <Tag color="blue">常用</Tag>
+                                            <Tag>灯</Tag>
+                                            <Tag>窗帘</Tag>
+                                            <Tag>门</Tag>
+                                            <Tag>客厅</Tag>
+                                            <Tag>厨房</Tag>
+                                            <Tag>卫生间</Tag>
+                                            <Tag>卧室</Tag>
                                         </div>
 
                                     </div>
                                 </card>
                             </div>
                             <div class="button_wrapper">
-                                <Button type="default" size="large" long icon="ios-information-outline">关于本站</Button>
+                                <Button type="default" size="large" long icon="ios-information-outline">关于本系统</Button>
                             </div>
 
                             <div class="button_wrapper">
-                                <Button type="ghost" size="large" long icon="paper-airplane">建议反馈</Button>
+                                <Button type="ghost" size="large" long icon="paper-airplane">我要反馈</Button>
                             </div>
 
                         </div>
@@ -128,8 +141,8 @@
 
                                     <i-col span="13">
                                         <RadioGroup v-model="radio_chosen" @on-change="switch_order">
-                                            <Radio label="sort_by_time">按时间排序</Radio>
-                                            <Radio label="sort_by_view">按查看次数排序</Radio>
+                                            <Radio label="sort_by_time">按添加时间排序</Radio>
+                                            <Radio label="sort_by_view">按使用次数排序</Radio>
                                             <!--<Radio label="sort_by_error">按错误率排序</Radio>-->
                                         </RadioGroup>
                                     </i-col>
@@ -141,7 +154,7 @@
                                     <i-col span="5">
                                         <Row type="flex" justify="end" align="middle">
                                             <Checkbox v-model="only_not_review" @on-change="show_not_review_only">
-                                                仅显示未复习的错题
+                                                仅显示已连接的设备
                                             </Checkbox>
                                         </Row>
 
@@ -151,78 +164,167 @@
                             </div>
 
                             <div v-if="q_data.length !== 0">
-                                <div class="card-wrapper" v-for="(item, index) in q_data">
-                                    <div class="card-event-binder" v-on:mouseover="showManage(index)"
-                                         v-on:mouseleave="hideManage">
-                                        <card class="card_content">
-                                            <Row type="flex" justify="start" align="middle">
-                                                <i-col span="19">
-                                                    <!--<span>标签</span>-->
-                                                    <Row type="flex" align="middle">
-                                                        <i-col span="18">
-                                                            <Tag v-if="item.bySelf===false" color="blue">公共</Tag>
-                                                            <Tag v-for="tag in item.qTag">
-                                                                {{tag}}
-                                                            </Tag>
-                                                        </i-col>
-                                                        <!--<i-col span="6">-->
-                                                        <!--<p class="item-time">-->
-                                                        <!--<span>{{parse_time(item.createTime)}}</span>-->
-                                                        <!--</p>-->
-                                                        <!--</i-col>-->
-                                                    </Row>
+                                <Row type="flex" justify="start" align="top">
+                                    <i-col span="8">
+                                        <div class="card-wrapper" v-for="(item, index) in q_data1">
+                                            <div class="card-event-binder">
+                                                <card class="card_content">
+
+
+                                                    <Tag v-if="item.bySelf===false" color="blue">公共</Tag>
+                                                    <Tag v-for="tag in item.qTag">
+                                                        {{tag}}
+                                                    </Tag>
 
                                                     <div class="item-title-wrapper">
-                                                        <span class="item-title"
-                                                              @click="viewItem(item.id)">{{item.title}}</span>
+                                                        <span class="item-title">{{item.title}}</span>
+<!--                                                        <span class="item-title" @click="viewItem(item.id)">{{item.title}}</span>-->
                                                     </div>
-
-
-                                                    <div class="item-stat">
-                                                        <span><Icon type="eye"></Icon> 查看次数 <span class="number">{{item.viewCount}}</span></span>
-                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                                        <span><Icon type="edit"></Icon> 重做次数 <span class="number">{{item.redoCount}}</span></span>
-                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                                        <span>{{parse_time(item.createTime)}}</span>
+                                                    <div class="item-switch-wrapper">
+                                                        <i-switch v-model="q_data[index*3].switchStatus" @on-change="change_switch(index*3)">
+                                                            <span slot="open">开</span>
+                                                            <span slot="close">关</span>
+                                                        </i-switch>
                                                     </div>
-
-                                                    <!--<div class="card_topic_html">-->
-                                                    <!--<div v-html="item.qText"></div>-->
-                                                    <!--</div>-->
-
-                                                </i-col>
-                                                <i-col span="4" v-show="q_index === index">
                                                     <Row>
-                                                        <i-col span="8" class="col-manage view">
-                                                            <router-link :to="{name: 'Item', query: {id: item.id}}">
-                                                                <Button type="text">查看</Button>
-                                                            </router-link>
-                                                        </i-col>
-                                                        <i-col span="8" class="col-manage redo">
-                                                            <Button type="text" @click="redo(item.id)">重做</Button>
-                                                        </i-col>
-                                                        <i-col span="8" class="col-manage edit">
-                                                            <Button type="text" :disabled="item.bySelf===false"
-                                                                    @click="edit(item.id)">编辑
+                                                        <i-col span="12" class="col-manage edit">
+                                                            <Button icon="edit" type="text" @click="edit(item.id)">编辑
                                                             </Button>
                                                         </i-col>
+                                                        <i-col span="12" class="col-manage redo">
+                                                            <Button icon="android-delete" type="text" @click="delete_topic=true;deleted_item_id=item.id;">删除</Button>
+                                                        </i-col>
+
                                                         <!--<i-col span="6" class="col-manage del">-->
                                                         <!--<Button type="text">删除</Button>-->
                                                         <!--</i-col>-->
                                                     </Row>
-                                                </i-col>
 
-                                            </Row>
-                                        </card>
+
+
+                                                </card>
+                                            </div>
+
+                                        </div>
+                                    </i-col>
+                                    <i-col span="8">
+                                        <div class="card-wrapper" v-for="(item, index) in q_data2">
+                                            <div class="card-event-binder">
+                                                <card class="card_content">
+
+
+                                                    <Tag v-if="item.bySelf===false" color="blue">公共</Tag>
+                                                    <Tag v-for="tag in item.qTag">
+                                                        {{tag}}
+                                                    </Tag>
+
+                                                    <div class="item-title-wrapper">
+                                                        <span class="item-title">{{item.title}}</span>
+                                                        <!--                                                        <span class="item-title" @click="viewItem(item.id)">{{item.title}}</span>-->
+                                                    </div>
+                                                    <div class="item-switch-wrapper">
+                                                        <i-switch v-model="q_data[index*3+1].switchStatus" @on-change="change_switch(index*3+1)">
+                                                            <span slot="open">开</span>
+                                                            <span slot="close">关</span>
+                                                        </i-switch>
+                                                    </div>
+                                                    <Row>
+                                                        <i-col span="12" class="col-manage edit">
+                                                            <Button icon="edit" type="text" @click="edit(item.id)">编辑
+                                                            </Button>
+                                                        </i-col>
+                                                        <i-col span="12" class="col-manage redo">
+                                                            <Button icon="android-delete" type="text" @click="redo(item.id)">删除</Button>
+                                                        </i-col>
+
+                                                        <!--<i-col span="6" class="col-manage del">-->
+                                                        <!--<Button type="text">删除</Button>-->
+                                                        <!--</i-col>-->
+                                                    </Row>
+
+
+
+                                                </card>
+                                            </div>
+
+                                        </div>
+                                    </i-col>
+                                    <i-col span="8">
+                                        <div class="card-wrapper" v-for="(item, index) in q_data3">
+                                            <div class="card-event-binder">
+                                                <card class="card_content">
+
+
+                                                    <Tag v-if="item.bySelf===false" color="blue">公共</Tag>
+                                                    <Tag v-for="tag in item.qTag">
+                                                        {{tag}}
+                                                    </Tag>
+
+                                                    <div class="item-title-wrapper">
+                                                        <span class="item-title">{{item.title}}</span>
+                                                        <!--                                                        <span class="item-title" @click="viewItem(item.id)">{{item.title}}</span>-->
+                                                    </div>
+                                                    <div class="item-switch-wrapper">
+                                                        <i-switch v-model="q_data[index*3+2].switchStatus" @on-change="change_switch(index*3+2)">
+                                                            <span slot="open">开</span>
+                                                            <span slot="close">关</span>
+                                                        </i-switch>
+                                                    </div>
+                                                    <Row>
+                                                        <i-col span="12" class="col-manage edit">
+                                                            <Button icon="edit" type="text" @click="edit(item.id)">编辑
+                                                            </Button>
+                                                        </i-col>
+                                                        <i-col span="12" class="col-manage redo">
+                                                            <Button icon="android-delete" type="text" @click="redo(item.id)">删除</Button>
+                                                        </i-col>
+
+                                                        <!--<i-col span="6" class="col-manage del">-->
+                                                        <!--<Button type="text">删除</Button>-->
+                                                        <!--</i-col>-->
+                                                    </Row>
+
+
+
+                                                </card>
+                                            </div>
+
+                                        </div>
+                                    </i-col>
+
+                                </Row>
+
+                                <Modal v-model="delete_topic" width="360">
+                                    <p slot="header" style="color:#f60;text-align:center">
+                                        <Icon type="information-circled"></Icon>
+                                        <span>删除确认</span>
+                                    </p>
+                                    <div style="text-align:center">
+                                        <p>你确定要永久删除这个设备吗？</p>
                                     </div>
+                                    <div slot="footer">
+                                        <Row type="flex" justify="space-around">
+                                            <i-col span="11">
+                                                <Button type="warning" size="large" long :loading="modal_loading"
+                                                        @click="del">删除
+                                                </Button>
+                                            </i-col>
+                                            <i-col span="11">
+                                                <Button type="default" size="large" long :disabled="modal_loading"
+                                                        @click="cancel_del">取消
+                                                </Button>
+                                            </i-col>
+                                        </Row>
+                                    </div>
+                                </Modal>
 
+                                <div class="card-wrapper">
+                                    <Button type="ghost" long size="large" icon="load-a" @click="load_more">加载更多</Button>
                                 </div>
-
-                                <Button type="ghost" long size="large" icon="load-a" @click="load_more">加载更多</Button>
                             </div>
 
                             <div v-else>
-                                <card>没有符合条件的错题</card>
+                                <card>没有设备</card>
                             </div>
 
                         </div>
@@ -268,6 +370,10 @@
             all_data: [],
             q_data: [],
             page: 0,
+            switches: [],
+            delete_topic: false,
+            modal_loading: false,
+            deleted_item_id: "",
 
             searchWord: "",
 
@@ -343,6 +449,42 @@
 
             redo: function (item_id) {
                 this.$router.push({name: 'Item', query: {id: item_id, redo: true}});
+            },
+
+            del: function () {
+                this.modal_loading = true;
+                setTimeout(() => {
+                    this.delete_topic = false;
+                    this.modal_loading = false;
+
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("DELETE", "http://192.168.0.106:8080/item/entry?id=" + this.deleted_item_id, true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+
+                    xhr.onreadystatechange = () => {
+                        console.log(xhr.readyState + "  " + xhr.status);
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            console.log(xhr.responseText);
+                            let deleteResponse = JSON.parse(xhr.responseText);
+                            console.log(deleteResponse);
+                            console.log(deleteResponse.status);
+                            if (deleteResponse.status) {
+                                this.$Message.success('删除成功！');
+                                // this.$router.push("notepad");
+                                this.$router.go(0);
+                            } else {
+                                this.$Message.error('删除失败，请重试');
+
+                            }
+                        }
+                    };
+                    xhr.send();
+                }, 2000);
+            },
+
+            cancel_del: function () {
+                this.delete_topic = false;
             },
 
             edit: function (item_id) {
@@ -440,6 +582,42 @@
                 this.searchWord = null;
                 console.log(">>> " + this.page);
                 this.requestData(this.page, "time");
+            },
+
+            change_switch: function (idx) {
+
+                let edit_form = {
+                    id: this.q_data[idx].id,
+                    switchStatus: this.q_data[idx].switchStatus,
+                };
+                console.log(edit_form);
+                let data = JSON.stringify(edit_form);
+                console.log(data);
+
+                data = encodeURI(encodeURIComponent(data));
+
+                console.log(data);
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "http://192.168.0.106:8080/item/entry", true);
+                xhr.withCredentials = true;
+                xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+
+                xhr.onreadystatechange = () => {
+                    console.log(xhr.readyState + "  " + xhr.status);
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        console.log(xhr.responseText);
+                        let registerResponse = JSON.parse(xhr.responseText);
+                        console.log(registerResponse);
+                        console.log(registerResponse.status);
+                    }
+                };
+                xhr.send("json=" + data);
+
+                if (this.q_data[idx].switchStatus)
+                    this.$Message.success('打开设备成功！');
+                else
+                    this.$Message.success('关闭设备成功！');
             }
         },
 
@@ -464,7 +642,20 @@
         //     },
         // },
 
-        computed: {}
+        computed: {
+            q_data1: function () {
+                return this.q_data.filter((_, index) => { return index % 3 === 0; })
+            },
+            q_data2: function () {
+                return this.q_data.filter((_, index) => { return index % 3 === 1; })
+            },
+            q_data3: function () {
+                return this.q_data.filter((_, index) => { return index % 3 === 2; })
+            },
+            opened_device: function () {
+                return this.q_data.filter((item) => { return item.switchStatus === true; }).length;
+            }
+        }
     }
 </script>
 
@@ -483,11 +674,11 @@
     }
 
     .right_part .card-wrapper {
-        padding-bottom: 15px;
+        padding: 10px;
     }
 
     .right_part .card_content {
-        text-align: left;
+        text-align: center;
     }
 
     .settings {
@@ -548,6 +739,9 @@
     }
 
     .item-title-wrapper {
-        padding: 10px 0;
+        padding: 30px 0;
+    }
+    .item-switch-wrapper {
+        padding: 0 20px 20px;
     }
 </style>

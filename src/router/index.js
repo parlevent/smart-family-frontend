@@ -89,7 +89,7 @@ export default new Router({
                             children: [
                                 {
                                     path: '',
-                                    redirect: 'question-manage'
+                                    redirect: 'user-manage'
                                 },
                                 {
                                     path: 'question-manage',

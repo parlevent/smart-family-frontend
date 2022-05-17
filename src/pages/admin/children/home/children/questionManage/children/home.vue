@@ -2,10 +2,10 @@
     <div>
         <Row type="flex" justify="center" align="middle">
             <i-col span="4">
-                <Button type="success" long @click="create_new_topic">发布新错题</Button>
+                <Button type="success" long @click="create_new_topic">添加新设备</Button>
             </i-col>
             <i-col span="18" offset="2">
-                <p>已发布错题：{{topic_num}}</p>
+                <p>设备数目：{{topic_num}}</p>
             </i-col>
         </Row>
 
@@ -54,12 +54,12 @@
             return {
                 col_style: [
                     {
-                        title: '题目ID',
+                        title: '设备ID',
                         key: 'id',
                         sortable: true
                     },
                     {
-                        title: '标题',
+                        title: '设备名称',
                         key: 'title',
                         sortable: true
                     },
@@ -78,26 +78,25 @@
                         }
                     },
                     {
+                        title: '状态',
+                        key: 'status',
+                        render: (h, params) => {
+                            return h('i-switch', {
+                                on: {
+                                    change: () => {
+                                        this.$Message.success("修改成功！");
+                                    }
+                                }
+                            })
+                        }
+                    },
+                    {
                         title: '操作',
                         key: 'action',
-                        width: 300,
+                        width: 200,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'info',
-                                        size: 'default'
-                                    },
-                                    style: {
-                                        marginRight: '10px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.show(params.index)
-                                        }
-                                    }
-                                }, '查看'),
                                 h('Button', {
                                     props: {
                                         type: 'primary',

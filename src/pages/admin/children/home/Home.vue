@@ -4,7 +4,7 @@
             <Header>
                 <Row>
                     <i-col span="8">
-                        <p class="title">我的错题本 - 管理页</p>
+                        <p class="title">智慧家庭 - 管理页</p>
                     </i-col>
                     <i-col span="16">
                         <Row type="flex" justify="end">
@@ -22,17 +22,14 @@
                     <div :style="{padding: '10px'}"></div>
                     <Menu active-name="1-1" theme="light" width="auto" @on-select="select_option">
                         <MenuItem name="1-1">
-                            <Icon type="ios-gear"></Icon>
-                            <span>错题管理</span>
-                        </MenuItem>
-                        <MenuItem name="1-2">
                             <Icon type="ios-people"></Icon>
                             <span>用户管理</span>
                         </MenuItem>
-                        <MenuItem name="1-3">
-                            <Icon type="stats-bars"></Icon>
-                            <span>错题统计</span>
+                        <MenuItem name="1-2">
+                            <Icon type="ios-gear"></Icon>
+                            <span>设备管理</span>
                         </MenuItem>
+
                     </Menu>
                 </Sider>
                 <Layout :style="{padding: '15px 24px 24px'}">
@@ -100,11 +97,9 @@
         methods: {
             select_option: function (sel) {
                 if (sel === "1-1") {
-                    this.$router.push('/admin/home/question-manage');
-                } else if(sel === "1-2") {
                     this.$router.push('/admin/home/user-manage');
-                } else if(sel === "1-3") {
-                    this.$router.push('/admin/home/statistics');
+                } else if(sel === "1-2") {
+                    this.$router.push('/admin/home/question-manage');
                 }
             },
 
