@@ -5,11 +5,11 @@
         <div class="nav_wrapper">
             <Row>
                 <i-col span="4">
-                    <span class="title">我的错题本</span>
+                    <span class="title">智慧家庭</span>
                 </i-col>
 
                 <i-col span="17">
-                    <Input v-model="value" size="large" placeholder="输入标签开始检索" class="input-search-box"/>
+                    <Input v-model="value" size="large" placeholder="输入智能设备信息开始检索" class="input-search-box"/>
                     <Button size="large" type="primary" icon="ios-search" shape="circle" @click="search">搜索</Button>
                 </i-col>
 
@@ -72,7 +72,8 @@
         mounted: function () {
 
             let xhr = new XMLHttpRequest();
-            xhr.open("GET", "/userProfile", true);
+            xhr.open("GET", "http://192.168.0.106:8080/userProfile", true);
+            xhr.withCredentials = true;
             xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
             xhr.onreadystatechange = () => {

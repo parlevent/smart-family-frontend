@@ -76,7 +76,8 @@
         mounted: function () {
 
             let xhr = new XMLHttpRequest();
-            xhr.open("GET", "/user/username", true);
+            xhr.open("GET", "http://192.168.0.106:8080/user/username", true);
+            xhr.withCredentials = true;
             xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
             xhr.onreadystatechange = () => {
@@ -109,7 +110,8 @@
 
             quit: function () {
                 let xhr = new XMLHttpRequest();
-                xhr.open("GET", "/auth/logout", true);
+                xhr.open("GET", "http://192.168.0.106:8080/auth/logout", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {
@@ -132,7 +134,8 @@
 
             switch_to_normal: function () {
                 let xhr = new XMLHttpRequest();
-                xhr.open("GET", "/auth/logout", true);
+                xhr.open("GET", "http://192.168.0.106:8080/auth/logout", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {

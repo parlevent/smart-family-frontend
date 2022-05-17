@@ -133,7 +133,8 @@
         mounted: function () {
 
             let xhr = new XMLHttpRequest();
-            xhr.open("GET", "http://212.129.145.211:30001/userProfile", true);
+            xhr.open("GET", "http://192.168.0.106:8080/userProfile", true);
+            xhr.withCredentials = true;
             xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
             xhr.onreadystatechange = () => {
@@ -185,7 +186,8 @@
                         console.log(data);
 
                         let xhr = new XMLHttpRequest();
-                        xhr.open("POST", "http://212.129.145.211:30001/userProfile", true);
+                        xhr.open("POST", "http://192.168.0.106:8080/userProfile", true);
+                        xhr.withCredentials = true;
                         xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                         xhr.onreadystatechange = () => {

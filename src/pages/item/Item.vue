@@ -230,7 +230,8 @@
                 console.log(data);
 
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", "http://212.129.145.211:30001/item/redo", true);
+                xhr.open("POST", "http://192.168.0.106:8080/item/redo", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {
@@ -280,7 +281,8 @@
                     this.delete_topic = false;
 
                     let xhr = new XMLHttpRequest();
-                    xhr.open("DELETE", "http://212.129.145.211:30001/item/entry?id=" + this.item_id, true);
+                    xhr.open("DELETE", "http://192.168.0.106:8080/item/entry?id=" + this.item_id, true);
+                    xhr.withCredentials = true;
                     xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                     xhr.onreadystatechange = () => {
@@ -329,7 +331,8 @@
             this.item_id = this.$route.query.id;
 
             let xhr = new XMLHttpRequest();
-            xhr.open("GET", "http://212.129.145.211:30001/item/entry?id=" + this.$route.query.id, true);
+            xhr.open("GET", "http://192.168.0.106:8080/item/entry?id=" + this.$route.query.id, true);
+            xhr.withCredentials = true;
             xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
             xhr.onreadystatechange = () => {

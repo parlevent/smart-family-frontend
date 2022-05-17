@@ -1,7 +1,7 @@
 <template>
     <div class="info_footer">
         <div class="footer_content">
-            我的错题本&copy;2018 / <a>关于本站</a> / All Rights Reserved.
+            智慧家庭系统&copy;2022 / <a>关于本站</a> / All Rights Reserved.
         </div>
 
     </div>

@@ -144,7 +144,8 @@
         mounted: function () {
 
             let xhr = new XMLHttpRequest();
-            xhr.open("GET", "/user/list", true);
+            xhr.open("GET", "http://192.168.0.106:8080/user/list", true);
+            xhr.withCredentials = true;
             xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
             xhr.onreadystatechange = () => {
@@ -224,7 +225,8 @@
                 console.log(data);
 
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", "/user/state", true);
+                xhr.open("POST", "http://192.168.0.106:8080/user/state", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {
@@ -273,7 +275,8 @@
                 console.log(data);
 
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", "/user/state", true);
+                xhr.open("POST", "http://192.168.0.106:8080/user/state", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {
@@ -337,7 +340,8 @@
                 console.log(data);
 
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", "/user/deleteUsers", true);
+                xhr.open("POST", "http://192.168.0.106:8080/user/deleteUsers", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {

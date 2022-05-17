@@ -24,7 +24,8 @@
         mounted: function () {
 
             let xhr = new XMLHttpRequest();
-            xhr.open("GET", "/item/list", true);
+            xhr.open("GET", "http://192.168.0.106:8080/item/list", true);
+            xhr.withCredentials = true;
             xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
             xhr.onreadystatechange = () => {
@@ -147,7 +148,8 @@
                     content: '<p>确认删除？</p>',
                     onOk: () => {
                         let xhr = new XMLHttpRequest();
-                        xhr.open("DELETE", "/item/entry?id=" + this.col_data[index].id, true);
+                        xhr.open("DELETE", "http://192.168.0.106:8080/item/entry?id=" + this.col_data[index].id, true);
+                        xhr.withCredentials = true;
                         xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                         xhr.onreadystatechange = () => {

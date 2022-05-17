@@ -178,7 +178,8 @@
 
         mounted: function () {
             let xhr = new XMLHttpRequest();
-            xhr.open("GET", "/statistics/item/num", true);
+            xhr.open("GET", "http://192.168.0.106:8080/statistics/item/num", true);
+            xhr.withCredentials = true;
             xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
             xhr.onreadystatechange = () => {
@@ -212,7 +213,8 @@
 
             getUserInfo: function () {
                 let xhr = new XMLHttpRequest();
-                xhr.open("GET", "/statistics/item", true);
+                xhr.open("GET", "http://192.168.0.106:8080/statistics/item", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {
@@ -244,7 +246,8 @@
             getItemInfo: function () {
                 console.log("> enter getItemInfo");
                 let xhr = new XMLHttpRequest();
-                xhr.open("GET", "/statistics/item/time", true);
+                xhr.open("GET", "http://192.168.0.106:8080/statistics/item/time", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {
@@ -288,7 +291,8 @@
 
             getTagInfo: function () {
                 let xhr = new XMLHttpRequest();
-                xhr.open("GET", "/statistics/item/tag", true);
+                xhr.open("GET", "http://192.168.0.106:8080/statistics/item/tag", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {

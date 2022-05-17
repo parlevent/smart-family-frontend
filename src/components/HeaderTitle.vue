@@ -5,7 +5,7 @@
         <div class="nav_wrapper">
             <Row>
                 <i-col span="4">
-                    <span class="title">我的错题本</span>
+                    <span class="title">智慧家庭</span>
                 </i-col>
 
                 <i-col span="16">

@@ -61,7 +61,8 @@
                 let data = `username=${this.formInline.user}&password=${this.formInline.password}&type=1`;
 
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", "http://212.129.145.211:30001/auth/login", true);
+                xhr.open("POST", "http://192.168.0.106:8080/auth/login", true);
+                xhr.withCredentials = true;
                 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
                 xhr.onreadystatechange = () => {
